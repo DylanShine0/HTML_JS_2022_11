@@ -2,3 +2,20 @@ html, body{
     background-color: pink;
     color: blue;
 }
+h1{
+
+    margin: auto;
+    border: 10px solid red;
+    padding: 40px;
+    background-color: cornflowerblue;
+    font-family: arial;
+    text-align: center;
+    color: violet;
+}
+p{
+    width:400px;
+    margin-top:100px;
+    border: 15px dashed blue;
+    padding: 0px;
+    font-family: Courier;
+}
