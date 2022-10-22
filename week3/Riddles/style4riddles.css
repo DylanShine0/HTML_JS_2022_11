@@ -1,0 +1,13 @@
+html, body{
+    font-family: arial;
+    color: black;
+    padding: 10px;
+    border: 10px;
+}
+h1{
+
+    background-color: rgb(201, 201, 201);
+    color: blue;
+    font-family: arial;
+    border: 20px;
+}
