@@ -39,7 +39,7 @@ footer{
 }
 .nav-btn{
     margin: auto;
-    width: 405px;
+    width: fit-content;
     height: 50px;
     border-left: 1px solid black;
     border-right: 1px solid black;
