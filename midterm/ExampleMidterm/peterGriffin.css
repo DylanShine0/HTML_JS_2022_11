@@ -45,7 +45,7 @@ footer {
 	/* Give this element a width of 100% */
 	width: 100%;
 	/* Give this element a padding top and bottom of 20 pixels and a right and left of zero using the padding shorthand property */
-	padding: 20px 0px 0px 20px;
+	padding: 20px 0px;
 	
 	
 	/* Give this element a border top of 2 pixels, a solid line and a hex color of #09c1da */ 
