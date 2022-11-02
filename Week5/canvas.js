@@ -42,6 +42,21 @@ ctx.closePath();
 ctx.fill()
 ctx.stroke()
 
+//draw some random shape
+ctx.fillStyle = "#55ddef"
+ctx.strokeStyle = "Yellow"
+ctx.lineWidth = "2"
+
+ctx.beginPath();
+
+ctx.moveTo(650, 100)
+ctx.lineTo(700, 140)
+ctx.lineTo(675, 200)
+ctx.lineTo(625, 200)
+ctx.lineTo(600, 148)
+ctx.closePath();
+ctx.fill();
+ctx.stroke()
 
 
 
