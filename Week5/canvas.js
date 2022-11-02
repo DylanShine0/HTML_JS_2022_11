@@ -42,7 +42,7 @@ ctx.closePath();
 ctx.fill()
 ctx.stroke()
 
-//draw some random shape
+//draw some random shape    (pentagon-ish)
 ctx.fillStyle = "#55ddef"
 ctx.strokeStyle = "Yellow"
 ctx.lineWidth = "2"
@@ -58,5 +58,13 @@ ctx.closePath();
 ctx.fill();
 ctx.stroke()
 
+
+//draw an image to the canvas
+var mario = new Image(); 
+mario.src = "images/mario.png";
+
+mario.onload = function(){
+    ctx.drawImage(mario, 470, 200, 100, 98.88);
+}
 
 
