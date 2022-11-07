@@ -2,10 +2,10 @@ var canvas = document.getElementById("canvas")
 var ctx = canvas.getContext("2d")
 
 var timer = requestAnimationFrame(main);
-var x = 100;
+var x = 10;
 var y = 0;
-var speedX = 3;
-var speedY = 3;
+var speedX = 1;
+var speedY = 1;
 
 
 
@@ -37,18 +37,27 @@ function main() {
     //ctx.scale(-1, 1);
     ctx.drawImage(mario, x, y, 90, 98.88)
 
-    x += speedX;
+    x += speedX;    
     y += speedY;
+
+    //x += -(speedX)^2
+    //y += -(speedY)^2
+    //Math.pow(x, 2)
+    //Math.pow(y, 2)
+
+    
 
     
     if(x > canvas.width  || x < -1){
         speedX *= -1;
+        
         
     }
     console.log(speedX);
     
     if(y > canvas.height  || y < -1){
         speedY *= -1;
+       
 
     }
     console.log(speedY);
