@@ -1,24 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Riddles with javascipt</title>
+
+
+    
+
+    
+
+    <style>
+            
+
+            /*@import url('https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap');*/
+
+            @font-face {
+                font-family: starWars;
+                src: url(fonts/star_jedi/starjedi/Starjedi.ttf);
+            }
+            body{
+                /*font-family: 'Rubik Bubbles', cursive;*/
+                -webkit-text-stroke-width: 2px;
+                -webkit-text-fill-color: orange;
+                font-family: starWars;
+            }
+    </style>
+
 </head>
+
 <body>
     <ul>
         <li>
             <p>What is black with red all over it</p>
-
-            <P onClick = "showAnswer('answer', 'A Newpaper!')" id="answer">Answer</P>
+            <br>
+            <button onclick="showAnswer('answer', 'A Newpaper!')">Answer</button>
+            <span id="answer"></span>
         </li>
         <li>
             <p>What gets bigger the more its taken away?</p>
-
-            <P onClick = "showAnswer('answer2', 'A Hole!')" id="answer2">Answer</P>
+            <br>
+            <button onClick="showAnswer('answer2', 'A Hole!')">Answer</button>
+            <span id="answer2"></span>
         </li>
     </ul>
     <script src="riddles.js"></script>
 </body>
+
 </html>
