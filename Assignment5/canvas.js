@@ -37,10 +37,13 @@ shape.fill()
 shape.stroke()
 
 
+
+
+
 //Pentagon
 
 shape.fillStyle = "#ff00ff"
-shape.strokeStyle = "00ffff"
+shape.strokeStyle = "#00ffff"
 shape.lineWidth = "5"
 
 shape.beginPath()
