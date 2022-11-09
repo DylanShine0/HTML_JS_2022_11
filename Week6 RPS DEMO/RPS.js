@@ -1,4 +1,20 @@
+//camvas drawing stuff
+
+var canvas = document.getElementById("c");
+var shape = canvas.getContext("2d");
+
+//drawing the fonts
+
+shape.font = "40px Arial";
+shape.fillStyle = "blue"
+shape.strokeStyle = "green"
+shape.fillText("Welcome to the RPS Game!", 125, 280);
+shape.strokeText("Welcome to the RPS Game!", 125, 280);
+
+
+
 //alert("Select rock, paper, or scissors!");
+
 
 var rps = ["rock", "paper", "scissors"];
 
