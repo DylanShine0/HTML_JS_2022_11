@@ -1,0 +1,22 @@
+@font-face {
+    font-family: starWars;
+    src: url(../Week6/CanvasExamples/1riddlesJS/fonts/star_jedi/starjedi/Starjedi.ttf);
+    
+}
+
+body{
+    -webkit-text-fill-color: darkcyan;
+    font-family: starWars;
+}
+
+body, html, nav, h1 {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(39, 39, 39);
+    
+}
+
+#canvas {
+    border: 2px solid rgb(255, 0, 0);
+    background-color: white;
+}

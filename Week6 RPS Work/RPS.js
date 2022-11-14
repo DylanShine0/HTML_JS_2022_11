@@ -1,13 +1,13 @@
 //camvas drawing stuff
 
-var canvas = document.getElementById("c");
+var canvas = document.getElementById("canvas");
 var shape = canvas.getContext("2d");
 
 //drawing the fonts
 
 shape.font = "40px Arial";
 shape.fillStyle = "red"
-shape.strokeStyle = "cyan"
+shape.strokeStyle = "darkred"
 shape.fillText("Welcome to the RPS Game!", 125, 80);
 shape.strokeText("Welcome to the RPS Game!", 125, 80);
 
@@ -42,7 +42,7 @@ document.getElementById("scissors").addEventListener('click', function (e) {
 
 
 shape.font = "20px Arial";
-shape.fillStyle = "black"
+shape.fillStyle = "rgb(60,60,60)"
 
 
 function playGame(playerChoice) {
@@ -53,16 +53,14 @@ function playGame(playerChoice) {
 
     
 
-    shape.fillText("You picked... " + playerChoice + "!", 200, 300)
-    shape.fillText("Cpu picked... " + rps[cpuChoice.toString()] + "!", 400, 300)
+    shape.fillText("You picked... " + playerChoice + "!", 180, 300)
+    shape.fillText("Cpu picked... " + rps[cpuChoice.toString()] + "!", 420, 300)
     
     shape.fillText("Your points: " + playerPoints, 200, 350)
     shape.fillText("Cpu's Points: " + cpuPoints, 400, 350)
 
 
-    pointDifferance = playerPoints - cpuChoice
-
-    shape.fillText("Point Differance: " + pointDifferance, 300, 400)
+    shape.fillText("Point Differance: " + Math.abs(playerPoints - cpuPoints), 300, 400)
     
 
     switch (playerChoice) {
