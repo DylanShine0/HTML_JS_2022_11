@@ -22,6 +22,7 @@ var rps = ["rock", "paper", "scissors"];
 var playerPoints = 0;
 var cpuPoints = 0;
 var pointDifferance = 0;
+var temp = 0;
 
 
 
@@ -59,7 +60,11 @@ function playGame(playerChoice) {
     shape.fillText("Cpu's Points: " + cpuPoints, 400, 350)
 
 
+    pointDifferance = playerPoints - cpuChoice
+
+    shape.fillText("Point Differance: " + pointDifferance, 300, 400)
     
+
     switch (playerChoice) {
         case "rock":
             if (cpuChoice == 0) {
