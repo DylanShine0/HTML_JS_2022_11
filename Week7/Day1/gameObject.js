@@ -104,22 +104,19 @@ function main(){
     //clear the canvas
     shape.clearRect(0,0,canvas.width,canvas.height)
 
-    //loop through all objects in the array
+    //loop through all circle objects in the array
     for(var i = 0; i < circles.length; i++){
 
         circles[i].move();
         //draw circles to the screen
         circles[i].drawCircle();
 
-        
-
-
     }
 
-
-    
-
-
+    for(var i = 0; i < squares.length; i++){
+        squares[i].move();
+        squares[i].drawSquare();
+    }
 
     // request the animation frame
     timer = requestAnimationFrame(main);
