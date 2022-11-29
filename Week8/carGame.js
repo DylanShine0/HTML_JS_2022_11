@@ -10,13 +10,13 @@ var carPos_BLUE = 2
 var carPos_YELLOW = 2
 
 //red car fuel
-var startFuel = randomNumber(canvas.width, 600)
+var startFuel = randomNumber1(canvas.width, 0)
 var fuel = startFuel;
 //blue car fuel
-var blueStartFuel = randomNumber(canvas.width, 600)
+var blueStartFuel = randomNumber2(canvas.width, 0)
 var blueFuel = blueStartFuel;
 //yellow car fuel
-var yellowStartFuel = randomNumber(canvas.width, 600)
+var yellowStartFuel = randomNumber3(canvas.width, 0)
 var yellowFuel = yellowStartFuel;
 
 var fuelBarWidth = 300;
@@ -63,17 +63,22 @@ function main() {
         }else{
             if (fuel > 0) {
                 carPos++;
-                carPos_BLUE++;
-                carPos_YELLOW++;
-
                 fuel-=1;
+            }
+            if(blueFuel > 0){
+                carPos_BLUE++;
                 blueFuel-=1;
+            }
+            if(yellowFuel){
+                carPos_YELLOW++;
                 yellowFuel-=1;
             }
         }
 
         drawStartFinish();
-        drawCar("red", "blue", "yellow");
+        drawCar1("red");
+        drawCar2("blue");
+        drawCar3("yellow");
 
 
 
@@ -106,6 +111,16 @@ function main() {
 
 }
 
+function randomNumber1(high, low) {
+    return Math.round(Math.random() * (high - low) + low)
+}
+function randomNumber2(high, low) {
+    return Math.round(Math.random() * (high - low) + low)
+}
+function randomNumber3(high, low) {
+    return Math.round(Math.random() * (high - low) + low)
+}
+
 function drawStartFinish() {
     shape.fillStyle = "black"
     //start line
@@ -115,16 +130,22 @@ function drawStartFinish() {
 }
 
 
-function drawCar(color, color2, color3) {
+function drawCar1(color) {
     //draw a car
 
     //red player 1
     shape.fillStyle = color
     shape.fillRect(carPos, 300 / 2, 40, 20)
+}
+function drawCar2(color2) {
+    //draw a car
 
     //blue player 2
     shape.fillStyle = color2
     shape.fillRect(carPos_BLUE, 400 / 2, 40, 20)
+}
+function drawCar3(color3) {
+    //draw a car
 
     //yellow player 3
     shape.fillStyle = color3
@@ -181,9 +202,7 @@ function drawFuelBar_YELLOW(gasColor, x ,y) {
 
 
 
-function randomNumber(high, low) {
-    return Math.round(Math.random() * (high - low) + low)
-}
+
 
 function runStartTimer(){
     console.log(frames);
