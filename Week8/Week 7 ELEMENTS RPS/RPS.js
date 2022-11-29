@@ -10,6 +10,9 @@ var hfire = new Image();
 var hwater = new Image();
 var hrock = new Image();
 
+var playerPoints = 0;
+var cpuPoints = 0;
+
 
 rock.src = "images/rock.png"
 water.src = "images/water.png"
@@ -85,6 +88,14 @@ function draw(rock, water, fire, crock, cwater, cfire) {
         shape.drawImage(cfire, canvas.width / 2 - cfire.width / 2 + 100, 330)
 
         shape.fillText(results, canvas.width / 2, 525)
+        //POINT_SYSTEM
+
+        
+        shape.font = "30px arial"
+        shape.fillStyle = "red"
+
+        shape.fillText("Your points: " + playerPoints, 280, 600)
+        shape.fillText("Cpu's Points: " + cpuPoints, 480, 600)
 
         shape.restore();
     }
@@ -121,67 +132,66 @@ function playGame(playerChoice) {
         var cpuChoice = Math.floor(Math.random() * 2.99);
         console.log(rps[cpuChoice.toString()], playerChoice)
 
+
         switch (playerChoice) {
             case "rock":
                 if (cpuChoice == 0) {
                     //rock
-                   
                     results = "Cpu chose Rock. Its a tie"
                     draw(hrock, water, fire, hrock, water, fire);
 
                 }
                 else if (cpuChoice == 1) {
                     //paper
-                    
                     results = "Cpu chose water. You lose!"
                     draw(hrock, water, fire, rock, hwater, fire);
+                    cpuPoints += 1;
                 }
                 else {
                     //scissors
-                    
                     results = "Cpu chose fire. You win!"
                     draw(hrock, water, fire, rock, water, hfire);
+                    playerPoints += 1;
                 }
                 break;
             case "water":
                 if (cpuChoice == 0) {
                     //rock
-                    
                     results = "Cpu chose fire. You win!"
                     draw(rock, hwater, fire, rock, water, hfire);
+                    playerPoints += 1
 
                 }
                 else if (cpuChoice == 1) {
                     //paper
-                    
                     results = "Cpu chose water. It's a tie!"
                     draw(rock, hwater, fire, rock, hwater, fire);
+                    
                 }
                 else {
                     //scissors
-                    
                     results = "Cpu chose rock. You lose!"
                     draw(rock, hwater, fire, hrock, water, fire);
+                    cpuPoints -= 1
                 }
                 break;
 
             case "fire":
                 if (cpuChoice == 0) {
                     //rock
-                    //alert("Cpu chose Rock. You lose!")
-                    results = "Cpu chose Rock. You lose!"
+                    results = "Cpu chose Rock. You win!"
                     draw(rock, water, hfire, hrock, water, fire);
+                    playerPoints += 1;
 
                 }
                 else if (cpuChoice == 1) {
                     //paper
-                    //alert("Cpu chose Paper. You Win!")
                     results = "Cpu chose water. You Lose!"
                     draw(rock, water, hfire, rock, hwater, fire);
+                    cpuPoints += 1
                 }
                 else {
-                    //scissors
-                    //alert("Cpu chose scissors. Its a tie!");                                                                               
+                    //scissors                                                     
                     results = "Cpu chose fire. Its a tie!"
                     draw(rock, water, hfire, rock, water, hfire);
                 }
