@@ -9,7 +9,7 @@ var gameOver = false
 var numAsteroids = 20;
 var asteroids = [];
 var asteroidPosition = null;
-var speed = 5;
+var speed = 2.5;
 
 var score = 0
 
@@ -198,15 +198,15 @@ function main(){
 
     //vertical movement
     if(ship.up){
-        ship.vy = -10;
+        ship.vy = -3;
     }else{
-        ship.vy = 3
+        ship.vy = 2.5
     }
     //horizontal
     if(ship.left){
-        ship.vx = -3
+        ship.vx = -1
     }else if(ship.right){
-        ship.vx = 3
+        ship.vx = 1
     }else{
 
         ship.vx = 0
