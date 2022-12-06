@@ -47,10 +47,18 @@ function playerCar() {
 
 var gameOver = true;
 
-var seconds = 1000;
-var fps = 60
-var frames = fps
+var startingSeconds = 3;
 
+var stopCounting = false;
+
+var seconds = setInterval(function(){
+    
+    if(stopCounting == false){
+        startingSeconds--;
+    }
+    
+
+}, 1000)
 
 
 
@@ -83,25 +91,30 @@ function main() {
     }
 
     if(!gameOver){
-        
-        console.log(seconds)
+        console.log(startingSeconds)
         drawFuelBar("red", 100, 30);
         drawStartTimer();
         drawStartFinish();
         car.drawCar();
-        runStartTimer();
+
+        if(startingSeconds <= 0){
             
-        if (fuel > 0) {
-            carPos += 2;
-            fuel -= 1;
+            moveCar();
+
         }
-        if (carPos + carWidth > finish || fuel <= 0) {
-            fuel = 0
-            drawResults();
-        }
-       
     }
     timer = requestAnimationFrame(main);
+}
+
+function moveCar(){
+    if (fuel > 0) {
+        carPos += 2;
+        fuel -= 1;
+    }
+    if (carPos + carWidth > finish || fuel <= 0) {
+        drawResults();
+        fuel = 0;
+    }
 }
 
 function drawStartTimer() {
@@ -109,16 +122,13 @@ function drawStartTimer() {
         shape.fillStyle = "black"
         shape.font = "25px ZEN"
         shape.textAlign = "center"
-        shape.fillText("Get Ready! " + seconds + ` *broken*`, canvas.width / 2, canvas.height / 3)
+        shape.fillText("Get Ready! " + startingSeconds, canvas.width / 2, canvas.height / 3)
 
-    }
-}
+        if(startingSeconds <= 0){
+            stopCounting = true;
+            startingSeconds = 0;
+        }
 
-function runStartTimer() {
-    if(!gameOver){
-        seconds--
-        //calls the score timer every second
-        //setTimeout(runStartTimer, 1000)
     }
 }
 
@@ -127,13 +137,13 @@ function drawStartFinish() {
     var finishLineImage = new Image;
     var StartLineImage = new Image;
 
-    finishLineImage.src = "images/FINISH-LINE.png"
-    StartLineImage.src = "images/FINISH-LINE.png"
+    finishLineImage.src = "images/FINISH-LINE-RED.png"
+    StartLineImage.src = "images/FINISH-LINE-BLUE.png"
 
     //finish line
-    shape.drawImage(finishLineImage, finish, 50, 83, 500)
+    shape.drawImage(finishLineImage, finish, 50, 62, 500)
     //start line
-    shape.drawImage(StartLineImage, start, 50, 83, 500)
+    shape.drawImage(StartLineImage, start, 50, 62, 500)
 
 }
 
@@ -153,10 +163,14 @@ function drawResults() {
 
 
 function drawFuelBar(gasColor, x, y) {
-    var currentBarWidth = fuelBarWidth * (fuel / startFuel);
-    shape.fillStyle = "Black"
-    shape.fillRect(x, y, fuelBarWidth, 10)
 
+    var fuelBarImage = new Image;
+    fuelBarImage.src = "images/FireFuelBar.png";
+    shape.drawImage(fuelBarImage, 100, 30)
+
+    var currentBarWidth = fuelBarWidth * (fuel / startFuel);
+
+    shape.fillStyle = "red"
     shape.font = "25px ZEN"
     shape.fillText("FUEL", start, 28)
 
