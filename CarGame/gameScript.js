@@ -3,14 +3,14 @@ var shape = canvas.getContext("2d")
 
 var timer = requestAnimationFrame(main)
 
-var start = 50
-var finish = 750
+var start = 58
+var finish = 956
 var carPos = 2
 
 
 //car fuel
-var startFuel = randomNumber1(canvas.width, 1)
-var fuel = startFuel;
+var startFuel = randomNumber1(canvas.width, 300)
+var fuel = startFuel
 var fuelBarWidth = 300;
 var carWidth = 50;
 
@@ -23,18 +23,24 @@ function playerCar() {
     this.y = canvas.height / 2;
     this.width = 60
     this.height = 100
+    this.vx = 0
+    this.vy = 0
 
 
     this.drawCar = function () {
 
         shape.save();
 
-        shape.fillStyle = "red"
-        shape.fillRect(carPos, canvas.height / 2, 40, 20)
-        shape.drawImage(carSprite, carPos, canvas.height / 2, 50, 20)
+        //shape.fillStyle = "red"
+        //shape.fillRect(carPos, canvas.height / 2, 40, 20)
+        shape.drawImage(carSprite, carPos, canvas.height / 2, 100, 80)
 
 
         shape.restore()
+    }
+    this.moveCar = function(){
+        this.x += this.vx
+        this.y += this.vy
     }
 
 }
@@ -44,7 +50,7 @@ function playerCar() {
 
 var gameOver = true;
 
-var seconds = 3;
+var seconds = 1000;
 var fps = 60
 var frames = fps
 
@@ -80,56 +86,70 @@ function main() {
         shape.textAlign = "center"
         shape.fillText("Press Space to Start", canvas.width / 2, canvas.height / 2);
 
-    } else {
-
-        if (!gameOver && seconds > 0) {
-            console.log(seconds)
-            car.drawCar()
-            runStartTimer();
-            drawStartTimer();
-            drawStartFinish();
-            drawFuelBar("red", 70, 30);
-        } else {
-            if (fuel > 0) {
-                carPos += 2;
-                fuel -= 1;
-            }
+    }
+    if(!gameOver){
+        
+        console.log(seconds)
+        drawFuelBar("red", 70, 30);
+        drawStartTimer();
+        drawStartFinish();
+        car.drawCar();
+        car.moveCar();
+        runStartTimer();
+            
+        if (fuel > 0) {
+            carPos += 2;
+            fuel -= 1;
         }
-
         if (carPos + carWidth > finish || fuel <= 0) {
             drawResults();
         }
+       
     }
-
     timer = requestAnimationFrame(main);
-
 }
-main();
 
+function drawStartTimer() {
+    if (carPos < finish) {
+        shape.fillStyle = "black"
+        shape.font = "25px Arial"
+        shape.textAlign = "center"
+        shape.fillText("Get Ready! " + seconds , canvas.width / 2, canvas.height / 2)
 
+    }
+}
 
-
-
+function runStartTimer() {
+    if(!gameOver){
+        seconds -= 1
+        //calls the score timer every second
+        //setTimeout(runStartTimer, 1000)
+    }
+}
 
 
 function drawStartFinish() {
-    shape.fillStyle = "black"
-    //start line
-    shape.fillRect(start, 50, 10, 500)
+    var finishLineImage = new Image;
+    var StartLineImage = new Image;
+
+    finishLineImage.src = "images/FINISH-LINE.png"
+    StartLineImage.src = "images/FINISH-LINE.png"
+
     //finish line
-    shape.fillRect(finish, 50, 10, 500)
+    shape.drawImage(finishLineImage, finish, 50, 83, 500)
+    //start line
+    shape.drawImage(StartLineImage, start, 50, 83, 500)
+
 }
 
 
 function drawResults() {
-
     if (carPos + carWidth > finish) {
-        shape.fillStyle = "white"
+        shape.fillStyle = "black"
         shape.font = "20px arial"
         shape.textAlign = "center"
         shape.fillText("You made it across the finish line! you win!", canvas.width / 2, canvas.height / 2)
     }
-
 }
 
 
@@ -148,24 +168,6 @@ function drawFuelBar(gasColor, x, y) {
     }
 }
 
-function runStartTimer() {
-    console.log(frames);
-    frames -= 1;
-    if (frames < 0) {
-        frames = fps
-        seconds -= 1;
-    }
-}
-
-function drawStartTimer() {
-    if (carPos || carPos_BLUE || carPos_YELLOW > finish) {
-        shape.fillStyle = "black"
-        shape.font = "25px Arial"
-        shape.textAlign = "center"
-        shape.fillText(seconds, canvas.width / 2, canvas.height / 2)
-    }
-}
-
 function randomNumber1(high, low) {
     return Math.round(Math.random() * (high - low) + low)
 }
@@ -173,3 +175,5 @@ function randomNumber1(high, low) {
 function restartGame() {
     location.reload();
 }
+
+
