@@ -11,7 +11,7 @@ var carPos = 2
 //car fuel
 var startFuel = randomNumber1(canvas.width, 100)
 var fuel = startFuel
-var fuelBarWidth = 300;
+var fuelBarWidth = 512;
 var carWidth = 10;
 
 
@@ -77,7 +77,7 @@ function main() {
             }
         }
         shape.fillStyle = "black"
-        shape.font = "30px Arial"
+        shape.font = "30px ZEN"
         shape.textAlign = "center"
         shape.fillText("Press Space to Start", canvas.width / 2, canvas.height / 2);
     }
@@ -85,7 +85,7 @@ function main() {
     if(!gameOver){
         
         console.log(seconds)
-        drawFuelBar("red", 70, 30);
+        drawFuelBar("red", 100, 30);
         drawStartTimer();
         drawStartFinish();
         car.drawCar();
@@ -107,7 +107,7 @@ function main() {
 function drawStartTimer() {
     if (carPos < finish) {
         shape.fillStyle = "black"
-        shape.font = "25px Arial"
+        shape.font = "25px ZEN"
         shape.textAlign = "center"
         shape.fillText("Get Ready! " + seconds + ` *broken*`, canvas.width / 2, canvas.height / 3)
 
@@ -116,7 +116,7 @@ function drawStartTimer() {
 
 function runStartTimer() {
     if(!gameOver){
-        seconds -= 1
+        seconds--
         //calls the score timer every second
         //setTimeout(runStartTimer, 1000)
     }
@@ -140,12 +140,13 @@ function drawStartFinish() {
 
 function drawResults() {
     if (carPos + carWidth > finish) {
-        shape.fillStyle = "black"
-        shape.font = "20px arial"
+        shape.fillStyle = "red"
+        shape.font = "30px ZEN"
         shape.textAlign = "center"
-        shape.fillText("You made it across the finish line! with " + startFuel + " fuel!", canvas.width / 2, canvas.height / 2)
+        shape.fillText("You made it across the finish line! with " + startFuel + " fuel!", canvas.width / 2, canvas.height / 4)
     } else {
-        shape.fillText("You did not make it with " + startFuel + " fuel :(", canvas.width/2, canvas.height/2.5)
+        shape.fillStyle = "red"
+        shape.fillText("You did not make it with " + startFuel + " fuel :(", canvas.width/2, canvas.height/4)
     }
 }
 
@@ -156,8 +157,8 @@ function drawFuelBar(gasColor, x, y) {
     shape.fillStyle = "Black"
     shape.fillRect(x, y, fuelBarWidth, 10)
 
-    shape.font = "25px Arial"
-    shape.fillText("fuel", start, 28)
+    shape.font = "25px ZEN"
+    shape.fillText("FUEL", start, 28)
 
     if (fuel > 0) {
         shape.fillStyle = "red"

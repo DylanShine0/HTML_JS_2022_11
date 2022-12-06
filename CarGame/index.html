@@ -10,21 +10,30 @@
 
         html,body{
             background-color: grey;
+            font-family: 'ZEN';
             display: flex;
             justify-content: center;
             
         }
         canvas{
-            border: 1px solid white;
+            border: 1px solid rgb(0, 0, 0);
+            font-family: 'ZEN';
+            background-image: url(images/DaytonaRacewayBackground.png);
+            background-repeat: no-repeat;
             
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+
+
 
     </style>
+
+
 </head>
 <body>
 
-    <canvas id="canvas" width="1100" height="600"></canvas>
+    <canvas id="canvas" width="1024" height="768"></canvas>
     <script src="gameScript.js"></script>
     
 </body>
