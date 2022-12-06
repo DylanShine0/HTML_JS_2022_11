@@ -9,10 +9,10 @@ var carPos = 2
 
 
 //car fuel
-var startFuel = randomNumber1(canvas.width, 300)
+var startFuel = randomNumber1(canvas.width, 100)
 var fuel = startFuel
 var fuelBarWidth = 300;
-var carWidth = 50;
+var carWidth = 10;
 
 
 var car = new playerCar();
@@ -33,15 +33,12 @@ function playerCar() {
 
         //shape.fillStyle = "red"
         //shape.fillRect(carPos, canvas.height / 2, 40, 20)
-        shape.drawImage(carSprite, carPos, canvas.height / 2, 100, 80)
+        shape.drawImage(carSprite, carPos, canvas.height / 2, 100, 30)
 
 
         shape.restore()
     }
-    this.moveCar = function(){
-        this.x += this.vx
-        this.y += this.vy
-    }
+    
 
 }
 
@@ -68,25 +65,23 @@ carSprite.src = "images/pixelCAR.png"
 
 //add some event listeners 
 
-document.addEventListener("keydown", keyPressDown);
-function keyPressDown(e) {
-
-    if (e.keyCode == 32 && gameOver == true) {
-        gameOver = false;
-    }
-}
 
 function main() {
     shape.clearRect(0, 0, canvas.width, canvas.height)
 
     if (gameOver) {
-
+        document.addEventListener("keydown", keyPressDown);
+        function keyPressDown(e) {
+            if (e.keyCode == 32 && gameOver == true) {
+                gameOver = false;
+            }
+        }
         shape.fillStyle = "black"
         shape.font = "30px Arial"
         shape.textAlign = "center"
         shape.fillText("Press Space to Start", canvas.width / 2, canvas.height / 2);
-
     }
+
     if(!gameOver){
         
         console.log(seconds)
@@ -94,7 +89,6 @@ function main() {
         drawStartTimer();
         drawStartFinish();
         car.drawCar();
-        car.moveCar();
         runStartTimer();
             
         if (fuel > 0) {
@@ -102,6 +96,7 @@ function main() {
             fuel -= 1;
         }
         if (carPos + carWidth > finish || fuel <= 0) {
+            fuel = 0
             drawResults();
         }
        
@@ -114,7 +109,7 @@ function drawStartTimer() {
         shape.fillStyle = "black"
         shape.font = "25px Arial"
         shape.textAlign = "center"
-        shape.fillText("Get Ready! " + seconds , canvas.width / 2, canvas.height / 2)
+        shape.fillText("Get Ready! " + seconds + ` *broken*`, canvas.width / 2, canvas.height / 3)
 
     }
 }
@@ -148,7 +143,9 @@ function drawResults() {
         shape.fillStyle = "black"
         shape.font = "20px arial"
         shape.textAlign = "center"
-        shape.fillText("You made it across the finish line! you win!", canvas.width / 2, canvas.height / 2)
+        shape.fillText("You made it across the finish line! with " + startFuel + " fuel!", canvas.width / 2, canvas.height / 2)
+    } else {
+        shape.fillText("You did not make it with " + startFuel + " fuel :(", canvas.width/2, canvas.height/2.5)
     }
 }
 
