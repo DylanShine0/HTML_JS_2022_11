@@ -9,7 +9,7 @@ var carPos = 2
 
 
 //car fuel
-var startFuel = 0
+var startFuel = randomNumber1(canvas.width, 1)
 var fuel = startFuel;
 var fuelBarWidth = 300;
 var carWidth = 50;
@@ -17,21 +17,21 @@ var carWidth = 50;
 
 var car = new playerCar();
 
-function playerCar(){
+function playerCar() {
 
-    this.x = canvas.width/2;
-    this.y = canvas.height/2;
-    this.width = 20
-    this.height = 20
+    this.x = canvas.width / 2;
+    this.y = canvas.height / 2;
+    this.width = 60
+    this.height = 100
 
 
-    this.drawCar = function(){
+    this.drawCar = function () {
 
         shape.save();
 
         shape.fillStyle = "red"
         shape.fillRect(carPos, canvas.height / 2, 40, 20)
-        shape.drawImage(carSprite, carPos, canvas.height/2,50,20)
+        shape.drawImage(carSprite, carPos, canvas.height / 2, 50, 20)
 
 
         shape.restore()
@@ -63,17 +63,14 @@ carSprite.src = "images/pixelCAR.png"
 //add some event listeners 
 
 document.addEventListener("keydown", keyPressDown);
-function keyPressDown(e){
+function keyPressDown(e) {
 
-    if(e.keyCode == 32 && gameOver == true){
+    if (e.keyCode == 32 && gameOver == true) {
         gameOver = false;
     }
-
 }
 
-
 function main() {
-
     shape.clearRect(0, 0, canvas.width, canvas.height)
 
     if (gameOver) {
@@ -81,73 +78,39 @@ function main() {
         shape.fillStyle = "black"
         shape.font = "30px Arial"
         shape.textAlign = "center"
-        shape.fillText("Press Space to Start", canvas.width/2, canvas.height/2);
-
-       
+        shape.fillText("Press Space to Start", canvas.width / 2, canvas.height / 2);
 
     } else {
 
-        if(!gameOver && seconds >0){
+        if (!gameOver && seconds > 0) {
             console.log(seconds)
+            car.drawCar()
             runStartTimer();
             drawStartTimer();
-        }else{
+            drawStartFinish();
+            drawFuelBar("red", 70, 30);
+        } else {
             if (fuel > 0) {
-                carPos+=2;
-                fuel-=1;
-            }
-            if(blueFuel > 0){
-                carPos_BLUE+=2;
-                blueFuel-=1;
-            }
-            if(yellowFuel){
-                carPos_YELLOW+=2;
-                yellowFuel-=1;
+                carPos += 2;
+                fuel -= 1;
             }
         }
 
-        drawStartFinish();
-        drawCar1("red");
-        
-        drawFuelBar("red", 70, 30);
-        
-
-        
-
-
-        if(carPos + carWidth > finish || fuel <= 0){
+        if (carPos + carWidth > finish || fuel <= 0) {
             drawResults();
         }
-     
-
-        
-
     }
-
-    car.drawCar()
-
-
-
 
     timer = requestAnimationFrame(main);
 
-
 }
-
-//draw car
-
+main();
 
 
 
-function randomNumber1(high, low) {
-    return Math.round(Math.random() * (high - low) + low)
-}
-function randomNumber2(high, low) {
-    return Math.round(Math.random() * (high - low) + low)
-}
-function randomNumber3(high, low) {
-    return Math.round(Math.random() * (high - low) + low)
-}
+
+
+
 
 function drawStartFinish() {
     shape.fillStyle = "black"
@@ -158,42 +121,20 @@ function drawStartFinish() {
 }
 
 
-function drawCar1(color) {
-    //draw a car
+function drawResults() {
 
-    //red player 1
-    shape.fillStyle = color
-    shape.fillRect(carPos, 300 / 2, 40, 20)
-}
-function drawCar2(color2) {
-    //draw a car
-
-    //blue player 2
-    shape.fillStyle = color2
-    shape.fillRect(carPos_BLUE, 400 / 2, 40, 20)
-}
-function drawCar3(color3) {
-    //draw a car
-
-    //yellow player 3
-    shape.fillStyle = color3
-    shape.fillRect(carPos_YELLOW, 500 / 2, 40, 20)
-}
-
-function drawResults(){
-
-    if(carPos + carWidth > finish){
+    if (carPos + carWidth > finish) {
         shape.fillStyle = "white"
         shape.font = "20px arial"
         shape.textAlign = "center"
-        shape.fillText("You made it across the finish line! you win!", canvas.width/2,canvas.height/2)
+        shape.fillText("You made it across the finish line! you win!", canvas.width / 2, canvas.height / 2)
     }
-    
+
 }
 
 
 
-function drawFuelBar(gasColor, x ,y) {
+function drawFuelBar(gasColor, x, y) {
     var currentBarWidth = fuelBarWidth * (fuel / startFuel);
     shape.fillStyle = "Black"
     shape.fillRect(x, y, fuelBarWidth, 10)
@@ -202,60 +143,33 @@ function drawFuelBar(gasColor, x ,y) {
     shape.fillText("fuel", start, 28)
 
     if (fuel > 0) {
-        shape.fillStyle = gasColor
+        shape.fillStyle = "red"
         shape.fillRect(x, y, currentBarWidth, 10);
     }
 }
 
-function drawFuelBar_BLUE(gasColor, x ,y) {
-    var currentBarWidth = fuelBarWidth * (blueFuel / blueStartFuel);
-    shape.fillStyle = "Black"
-    shape.fillRect(x, y, fuelBarWidth, 10)
-
-    shape.font = "25px Arial"
-    shape.fillText("fuel", start, 28)
-
-    if (blueFuel > 0) {
-        shape.fillStyle = gasColor
-        shape.fillRect(x, y, currentBarWidth, 10);
-    }
-}
-
-function drawFuelBar_YELLOW(gasColor, x ,y) {
-    var currentBarWidth = fuelBarWidth * (yellowFuel / yellowStartFuel);
-    shape.fillStyle = "Black"
-    shape.fillRect(x, y, fuelBarWidth, 10)
-
-    shape.font = "25px Arial"
-    shape.fillText("fuel", start, 28)
-
-    if (yellowFuel > 0) {
-        shape.fillStyle = gasColor
-        shape.fillRect(x, y, currentBarWidth, 10);
-    }
-}
-
-
-
-
-
-function runStartTimer(){
+function runStartTimer() {
     console.log(frames);
-    frames -= 1; 
-    if(frames < 0){
+    frames -= 1;
+    if (frames < 0) {
         frames = fps
         seconds -= 1;
     }
 }
-function drawStartTimer(){
-    if(carPos || carPos_BLUE || carPos_YELLOW > finish){
+
+function drawStartTimer() {
+    if (carPos || carPos_BLUE || carPos_YELLOW > finish) {
         shape.fillStyle = "black"
         shape.font = "25px Arial"
         shape.textAlign = "center"
-        shape.fillText(seconds, canvas.width/2, canvas.height/2)
+        shape.fillText(seconds, canvas.width / 2, canvas.height / 2)
     }
 }
 
-function restartGame(){
+function randomNumber1(high, low) {
+    return Math.round(Math.random() * (high - low) + low)
+}
+
+function restartGame() {
     location.reload();
 }
