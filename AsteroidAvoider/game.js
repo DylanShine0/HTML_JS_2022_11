@@ -3,7 +3,7 @@ var shape = canvas.getContext("2d")
 
 var timer = requestAnimationFrame(main)
 
-var gameOver = false
+var gameOver = true
 
 //asteroid variables
 var numAsteroids = 20;
@@ -46,6 +46,30 @@ function pressKeyDown(e){
             //code for down
             ship.down = true;
     
+        }
+    }
+    //STARTING THE GAME UP     MENU INPUT USING SPACEBAR
+    if(gameOver){
+        if(e.keyCode == 32){
+            if(currentState == 2){
+                //gameover inputs
+
+                currentState = 0;
+                numAsteroids = 20;
+                asteroids = [];
+                score = 0;
+                //start game here
+                
+                main()
+
+            }else{
+                //main menu inputs
+                gameStart()
+                currentState = 1;
+                gameOver = false
+                main()
+                scoreTimer()
+            }
         }
     }
 }
@@ -123,10 +147,32 @@ function playerShip(){
     this.vx = 0
     this.vy = 0
 
+    this.flameLength = 30
 
     this.drawShip = function(){
         shape.save();
         shape.translate(this.x, this.y)
+
+        //draw the thruster
+        if(this.up || this.left || this.right){
+            shape.save()
+            if(this.flameLength == 30){
+                this.flameLength = 20
+                shape.fillStyle = "yellow"
+            }else{
+                this.flameLength = 30
+                shape.fillStyle = "orange"
+            }
+            //draw the flame
+            shape.beginPath();
+            shape.moveTo(0,this.flameLength)
+            shape.lineTo(5,5)
+            shape.lineTo(-5,5)
+            shape.lineTo(0,this.flameLength)
+            shape.closePath();
+            shape.fill()
+            shape.restore()
+        }
 
 
         //draw the ship
@@ -174,11 +220,7 @@ function playerShip(){
     }
 }
 
-//for loop to instantiatie asteroids for game 
 
-for(var i = 0; i < numAsteroids; i++){
-    asteroids[i] = new Asteroid();
-}
 
 function main(){
     shape.clearRect(0,0,canvas.width,canvas.height)
@@ -242,9 +284,14 @@ gameState[1] = function(){
         var dY = ship.y - asteroids[i].y; 
         var distance = Math.sqrt((dX*dX) + (dY * dY));
 
+
+        //Collision Detection happens here
         if(detectCollision(distance, (ship.height/2 + asteroids[i].radius))){
             console.log("hit asteroid")
             gameOver = true;
+            currentState = 2;
+            main();
+            return;
         }
 
         if(asteroids[i].y > canvas.height + asteroids[i].radius){
@@ -268,13 +315,56 @@ gameState[1] = function(){
 
 //Game Over State
 gameState[2] = function(){
-    //code for the Game Over  menu
+
+    //code for the Game Over  menu AND SCORE 
+    if(score > highScore){
+        highScore = score
+
+        shape.save()
+        shape.font = "30px arial"
+        shape.fillStyle = "white"
+        shape.textAlign = "center"
+        shape.fillText("Game Over! Your Score was: " + score.toString(), canvas.width/2, canvas.height/2 -60)
+        shape.fillText("Your new High Score is: " + highScore.toString(), canvas.width/2, canvas.height/2 -10)
+
+        shape.fillStyle = "red"
+        shape.fillText("New Record!", canvas.width/2, canvas.height/2 + 45)
+
+        shape.fillStyle = "white"
+        shape.font = "30px arial"
+        shape.fillText("Press `Space` to play again", canvas.width/2, canvas.height/2 +100)
+        shape.restore()   
+    }else{
+        shape.save()
+        shape.font = "30px arial"
+        shape.fillStyle = "white"
+        shape.textAlign = "center"
+        shape.fillText("Game Over! Your Score was: " + score.toString(), canvas.width/2, canvas.height/2 -60)
+        shape.fillText("Game Over! Your High Score is: " + highScore.toString(), canvas.width/2, canvas.height/2 -10)
+
+        shape.font = "30px arial"
+        shape.fillText("Press `Space` to play again", canvas.width/2, canvas.height/2 +100)
+        shape.restore()   
+    }
+    
+
+    
 
 
 }
 
 
 //Utility functions
+
+function gameStart(){
+    //for loop to instantiatie asteroids for game 
+
+    for(var i = 0; i < numAsteroids; i++){
+        asteroids[i] = new Asteroid();
+    }
+    //gives new clean ship to start with
+    ship = new playerShip();
+}
 
 function randomRange(high,low){
     return Math.random() * (high - low) + low;
@@ -296,6 +386,3 @@ function scoreTimer(){
         setTimeout(scoreTimer, 1000)
     }
 }
-
-//temp call score function
-scoreTimer();
