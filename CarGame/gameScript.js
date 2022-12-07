@@ -114,6 +114,8 @@ function moveCar(){
     if (carPos + carWidth > finish || fuel <= 0) {
         drawResults();
         fuel = 0;
+        
+        
     }
 }
 
@@ -127,6 +129,7 @@ function drawStartTimer() {
         if(startingSeconds <= 0){
             stopCounting = true;
             startingSeconds = 0;
+            
         }
 
     }
