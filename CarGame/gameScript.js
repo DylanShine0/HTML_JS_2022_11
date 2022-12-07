@@ -35,7 +35,6 @@ function playerCar() {
         //shape.fillRect(carPos, canvas.height / 2, 40, 20)
         shape.drawImage(carSprite, carPos, canvas.height / 2, 100, 30)
 
-
         shape.restore()
     }
     

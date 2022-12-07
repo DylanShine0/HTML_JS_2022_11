@@ -9,21 +9,22 @@ var gameOver = false
 var numAsteroids = 20;
 var asteroids = [];
 var asteroidPosition = null;
-var speed = 2.5;
+var speed = 6;
 
 var score = 0
+var highScore = 0
+var currentState = 0
+var gameState = []
 
 //load asteroid sprite
 var asteroid_Sprite = new Image();
 asteroid_Sprite.src = "images/aster_Sprite.png"
-
 
 //create keyboard event handlers 
 document.addEventListener("keydown", pressKeyDown);
 document.addEventListener("keyup", pressKeyUp);
 
 function pressKeyDown(e){
-
     if(!gameOver){
         if(e.keyCode == 38 ){
             //code for up
@@ -47,9 +48,8 @@ function pressKeyDown(e){
     
         }
     }
-    
-    
 }
+
 function pressKeyUp(e){
     if(!gameOver){
         if(e.keyCode == 38){
@@ -82,7 +82,7 @@ function Asteroid(){
     this.height = 20
     this.x = randomRange(canvas.width - this.radius, this.radius)
     this.y = randomRange(canvas.height - this.radius, this.radius) - canvas.height
-    this.vy = randomRange(speed, 1)
+    this.vy = randomRange(speed, 4)
     this.color = "green"
 
     //methods (functions)
@@ -101,9 +101,7 @@ function Asteroid(){
         
 
         shape.restore();
-    }
-
-   
+    }   
 }
 
 //player ship variables
@@ -173,9 +171,6 @@ function playerShip(){
             this.x = this.width/2
             this.vx = 0
         }
-            
-    
-
     }
 }
 
@@ -188,7 +183,36 @@ for(var i = 0; i < numAsteroids; i++){
 function main(){
     shape.clearRect(0,0,canvas.width,canvas.height)
 
-    //draw score to the screen
+    gameState[currentState]();
+    if(!gameOver){
+         //REFRESH THE SCREEN
+        timer = requestAnimationFrame(main)
+    }
+}
+
+//game state machine
+
+//main menu state
+
+gameState[0] = function(){
+    //code for main menu
+    shape.save()
+
+    shape.font = "30px arial"
+    shape.fillStyle = "white"
+    shape.textAlign = "center"
+
+    shape.fillText("Asteroid Avoider", canvas.width/2, canvas.height/2 -30);
+    shape.font = "15px Arial"
+    shape.fillText("Press Space to start", canvas.width/2, canvas.height/2 +20);
+
+    shape.restore()
+
+}
+
+//play game state
+gameState[1] = function(){
+    //code for the asteroid game
 
     shape.save()
     shape.font = "15px Arial"
@@ -204,22 +228,15 @@ function main(){
     }
     //horizontal
     if(ship.left){
-        ship.vx = -1
+        ship.vx = -2
     }else if(ship.right){
-        ship.vx = 1
+        ship.vx = 2
     }else{
 
         ship.vx = 0
     }
         
-    
-
-
-
-//                                                          .radius x2               .radius x2
-
     for(var i = 0; i < asteroids.length; i++){
-
 
         var dX = ship.x - asteroids[i].x; 
         var dY = ship.y - asteroids[i].y; 
@@ -230,49 +247,38 @@ function main(){
             gameOver = true;
         }
 
-
-
         if(asteroids[i].y > canvas.height + asteroids[i].radius){
             asteroids[i].y = randomRange(canvas.height - asteroids[i].radius, asteroids[i].radius) - canvas.height ;
             asteroids[i].x = randomRange(canvas.width - asteroids[i].radius, asteroids[i].radius)
-            
         }
         asteroids[i].y += asteroids[i].vy;
         asteroids[i].drawAsteroid();
     }
 
-
     //draw ship
     ship.moveShip();
     ship.drawShip();
 
-    if(!gameOver){
-         //REFRESH THE SCREEN
-        timer = requestAnimationFrame(main)
-    }
-
+    //adds aasteroids to game as time goes on
     while(asteroids.length < numAsteroids){
         asteroids.push(new Asteroid());
         console.log("Added more asteroids!!!")
     }
-
-
-
-   
 }
-//main();
+
+//Game Over State
+gameState[2] = function(){
+    //code for the Game Over  menu
 
 
+}
 
 
-
-
-//Utility function
+//Utility functions
 
 function randomRange(high,low){
     return Math.random() * (high - low) + low;
 }
-
 
 function detectCollision(distance, calcDistance){
     return distance < calcDistance;
@@ -282,17 +288,14 @@ function scoreTimer(){
     if(!gameOver){
         score++
 
-
         if(score % 5 == 0){
             numAsteroids += 5
         }
 
         //calls the score timer every second
-
         setTimeout(scoreTimer, 1000)
     }
 }
 
 //temp call score function
-
 scoreTimer();
