@@ -124,7 +124,9 @@ function drawStartTimer() {
         shape.fillStyle = "black"
         shape.font = "25px ZEN"
         shape.textAlign = "center"
-        shape.fillText("Get Ready! " + startingSeconds, canvas.width / 2, canvas.height / 3)
+
+        var string1 = "Get Ready! " + startingSeconds
+        shape.fillText(string1, canvas.width / 2, canvas.height / 3)
 
         if(startingSeconds <= 0){
             stopCounting = true;
