@@ -23,9 +23,15 @@ asteroid_Sprite.src = "images/aster_Sprite.png"
 var spaceBackground = new Image();
 spaceBackground.src = "images/SpaceBackground.png"
 
+var spaceShipSmol = new Image();
+spaceShipSmol.src = "images/PixelSpaceshipSmol.png"
+
 //create keyboard event handlers 
 document.addEventListener("keydown", pressKeyDown);
 document.addEventListener("keyup", pressKeyUp);
+
+currentState = 1
+currentState = 0
 
 function pressKeyDown(e){
     if(!gameOver){
@@ -180,6 +186,9 @@ function playerShip(){
 
 
         //draw the ship
+
+        
+
         shape.fillStyle = "darkgreen"
         shape.lineWidth = 2;
         shape.strokeStyle = "rgb(0,255,0)"
@@ -191,6 +200,10 @@ function playerShip(){
         shape.closePath();
         shape.fill()
         shape.stroke()
+
+
+        shape.drawImage(spaceShipSmol, -14.75, -14.6,30,31)
+
         shape.restore()
     }
 
@@ -270,10 +283,11 @@ gameState[1] = function(){
     shape.restore()
 
     //vertical movement
+    /*
     if(ship.up){
         ship.vy = -2;
     }else{
-        ship.vy = 1.5
+        ship.vy = 0.8
     }
     //horizontal
     if(ship.left){
@@ -282,8 +296,20 @@ gameState[1] = function(){
         ship.vx = 1
     }else{
 
-        ship.vx = 0
+        ship.vx = 0.0
     }
+    */
+    if(ship.up){
+        ship.vy = -1.5
+    }else if(ship.down){
+        ship.vy = 1.5
+    }else{
+        ship.vx = -0.2
+    }
+
+    
+
+    
         
     for(var i = 0; i < asteroids.length; i++){
 
