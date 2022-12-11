@@ -18,7 +18,10 @@ var gameState = []
 
 //load asteroid sprite
 var asteroid_Sprite = new Image();
-asteroid_Sprite.src = "images/aster_Sprite.png"
+asteroid_Sprite.src = "images/aster_Sprite.png"  
+
+var spaceBackground = new Image();
+spaceBackground.src = "images/SpaceBackground.png"
 
 //create keyboard event handlers 
 document.addEventListener("keydown", pressKeyDown);
@@ -101,12 +104,12 @@ function pressKeyUp(e){
 
 function Asteroid(){
     //properties to draw the asteroid
-    this.radius = randomRange(10,2)
+    this.radius = randomRange(25,20)
     this.width = 25;   
     this.height = 20
-    this.x = randomRange(canvas.width - this.radius, this.radius)
-    this.y = randomRange(canvas.height - this.radius, this.radius) - canvas.height
-    this.vy = randomRange(speed, 1)
+    this.x = randomRange(canvas.width - this.radius, this.radius) + canvas.width;
+    this.y = randomRange(canvas.height - this.radius, this.radius);
+    this.vx = randomRange(speed, 1)
     this.color = "green"
 
     //methods (functions)
@@ -114,16 +117,17 @@ function Asteroid(){
     this.drawAsteroid = function(){
         shape.save();
 
-        //shape.drawImage(asteroid_Sprite, this.x, this.y)
-
         
+
+        /*
         shape.beginPath()
         shape.fillStyle = this.color;
         shape.arc(this.x, this.y, this.radius, 0, Math.PI *2,true)
         shape.closePath();
         shape.fill();
+        */
+        shape.drawImage(asteroid_Sprite, this.x-5, this.y-5, this.radius, this.radius)
         
-
         shape.restore();
     }   
 }
@@ -240,6 +244,9 @@ gameState[0] = function(){
     //code for main menu
     shape.save()
 
+
+    shape.drawImage(spaceBackground, 0, 0, canvas.width, canvas.height);
+
     shape.font = "30px arial"
     shape.fillStyle = "white"
     shape.textAlign = "center"
@@ -286,7 +293,7 @@ gameState[1] = function(){
 
 
         //Collision Detection happens here
-        if(detectCollision(distance, (ship.height/2 + asteroids[i].radius))){
+        if(detectCollision(distance, (ship.height/2 + asteroids[i].radius-10))){
             console.log("hit asteroid")
             gameOver = true;
             currentState = 2;
@@ -294,11 +301,13 @@ gameState[1] = function(){
             return;
         }
 
-        if(asteroids[i].y > canvas.height + asteroids[i].radius){
-            asteroids[i].y = randomRange(canvas.height - asteroids[i].radius, asteroids[i].radius) - canvas.height ;
-            asteroids[i].x = randomRange(canvas.width - asteroids[i].radius, asteroids[i].radius)
-        }
-        asteroids[i].y += asteroids[i].vy;
+        if(asteroids[i].x < canvas.width - canvas.width + asteroids[i].radius){
+                            //if divided height below it raises asteroids up
+            asteroids[i].x = randomRange(canvas.width - asteroids[i].radius, asteroids[i].radius) + canvas.width;
+            asteroids[i].y = randomRange(canvas.height - asteroids[i].radius, asteroids[i].radius);
+            
+        }                   //if multiplied width it pushes asteroids forward
+        asteroids[i].x -= asteroids[i].vx;
         asteroids[i].drawAsteroid();
     }
 
@@ -306,12 +315,16 @@ gameState[1] = function(){
     ship.moveShip();
     ship.drawShip();
 
+
     //adds aasteroids to game as time goes on
     while(asteroids.length < numAsteroids){
         asteroids.push(new Asteroid());
-        console.log("Added more asteroids!!!")
+        console.log("Added more asteroids!!!")  
+        //console.log("Asteroid Position" + " X: " + asteroids[1].x + " Y: " + asteroids[1].y)
+
     }
 }
+
 
 //Game Over State
 gameState[2] = function(){
