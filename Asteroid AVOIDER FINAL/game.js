@@ -26,6 +26,17 @@ spaceBackground.src = "images/SpaceBackground.png"
 var spaceShipSmol = new Image();
 spaceShipSmol.src = "images/PixelSpaceshipSmol.png"
 
+var fireLong = new Image();
+fireLong.src = "images/FireThruster_Long.png"
+
+var fireSmall = new Image();
+fireSmall.src = "images/FireThruster_Short.png"
+
+
+
+
+
+
 //create keyboard event handlers 
 document.addEventListener("keydown", pressKeyDown);
 document.addEventListener("keyup", pressKeyUp);
@@ -188,7 +199,7 @@ function playerShip(){
         //draw the ship
 
         
-
+        /*
         shape.fillStyle = "darkgreen"
         shape.lineWidth = 2;
         shape.strokeStyle = "rgb(0,255,0)"
@@ -200,9 +211,9 @@ function playerShip(){
         shape.closePath();
         shape.fill()
         shape.stroke()
+        */
 
-
-        shape.drawImage(spaceShipSmol, -14.75, -14.6,30,31)
+        shape.drawImage(spaceShipSmol, -14.75, -14.6, 30, 31)
 
         shape.restore()
     }
