@@ -322,7 +322,7 @@ gameState[1] = function(){
     if(ship.right){ //forward
         ship.vx = 2
     }else{
-        ship.vx = -1.5
+        ship.vx = -2
         shape.drawImage(fireIdle, 0-65, -10.5, 60,23)
         
     }
