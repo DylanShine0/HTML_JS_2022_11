@@ -9,12 +9,14 @@ var gameOver = true
 var numAsteroids = 20;
 var asteroids = [];
 var asteroidPosition = null;
-var speed = 1.999999999;
+var speed = 3;
 
 var score = 0
 var highScore = 0
 var currentState = 0
 var gameState = []
+
+var hitBoundary = false;
 
 //load asteroid sprite
 var asteroid_Sprite = new Image();
@@ -32,7 +34,8 @@ fireLong.src = "images/FireThruster_Long.png"
 var fireSmall = new Image();
 fireSmall.src = "images/FireThruster_Short.png"
 
-
+var fireIdle = new Image();
+fireIdle.src = "images/FireThruster_Idle.png"
 
 
 
@@ -121,12 +124,12 @@ function pressKeyUp(e){
 
 function Asteroid(){
     //properties to draw the asteroid
-    this.radius = randomRange(25,20)
+    this.radius = randomRange(30,10)
     this.width = 25;   
     this.height = 20
     this.x = randomRange(canvas.width - this.radius, this.radius) + canvas.width;
     this.y = randomRange(canvas.height - this.radius, this.radius);
-    this.vx = randomRange(speed, 1)
+    this.vx = randomRange(speed, 2)
     this.color = "green"
 
     //methods (functions)
@@ -136,14 +139,14 @@ function Asteroid(){
 
         
 
-        /*
-        shape.beginPath()
-        shape.fillStyle = this.color;
-        shape.arc(this.x, this.y, this.radius, 0, Math.PI *2,true)
-        shape.closePath();
-        shape.fill();
-        */
-        shape.drawImage(asteroid_Sprite, this.x-5, this.y-5, this.radius, this.radius)
+        
+        // shape.beginPath()
+        // shape.fillStyle = this.color;
+        // shape.arc(this.x, this.y, this.radius, 0, Math.PI *2,true)
+        // shape.closePath();
+        // shape.fill();
+        
+        shape.drawImage(asteroid_Sprite, this.x-(this.radius) , this.y-(this.radius), this.radius + this.radius, this.radius + this.radius)
         
         shape.restore();
     }   
@@ -156,9 +159,8 @@ var ship = new playerShip();
 function playerShip(){
     this.x = canvas.width/2;
     this.y = canvas.height/2;
-    this.width = 20
-    this.height = 20
-
+    this.width = 30;
+    this.height = 31;
 
     this.up = false
     this.down = false
@@ -175,43 +177,55 @@ function playerShip(){
         shape.translate(this.x, this.y)
 
         //draw the thruster
-        if(this.up || this.left || this.right){
+        if(this.up || this.down || this.right){
             shape.save()
+            
             if(this.flameLength == 30){
+
+                shape.drawImage(fireLong, 0-75, -10.5,60,23)
+
                 this.flameLength = 20
-                shape.fillStyle = "yellow"
+                //shape.fillStyle = "yellow"
             }else{
+
+                shape.drawImage(fireSmall, 0-65, -10.5,60,23)
+
                 this.flameLength = 30
-                shape.fillStyle = "orange"
+                //shape.fillStyle = "orange"
             }
+            
+
+
+
             //draw the flame
             shape.beginPath();
             shape.moveTo(0,this.flameLength)
-            shape.lineTo(5,5)
-            shape.lineTo(-5,5)
-            shape.lineTo(0,this.flameLength)
+            //shape.lineTo(5,5)
+            //shape.lineTo(-5,5)
+            //shape.lineTo(0,this.flameLength)
             shape.closePath();
             shape.fill()
             shape.restore()
+        
         }
 
 
         //draw the ship
 
         
-        /*
+        
         shape.fillStyle = "darkgreen"
-        shape.lineWidth = 2;
-        shape.strokeStyle = "rgb(0,255,0)"
-        shape.beginPath();
-        shape.moveTo(0,-10);
-        shape.lineTo(10,10);
-        shape.lineTo(-10,10);
-        shape.lineTo(0,-10);
-        shape.closePath();
-        shape.fill()
-        shape.stroke()
-        */
+        // shape.lineWidth = 2;
+        // shape.strokeStyle = "rgb(0,255,0)"
+        // shape.beginPath();
+        // shape.moveTo(0,-10);
+        // shape.lineTo(10,10);
+        // shape.lineTo(-10,10);
+        // shape.lineTo(0,-10);
+        // shape.closePath();
+        // shape.fill()
+        // shape.stroke()
+        
 
         shape.drawImage(spaceShipSmol, -14.75, -14.6, 30, 31)
 
@@ -241,10 +255,10 @@ function playerShip(){
             this.vx = 0
         }
         //left
-        if(this.x < this.width/2){
-            this.x = this.width/2
-            this.vx = 0
-        }
+        // if(this.x < this.width/2){
+        //     this.x = this.width/2
+        //     this.vx = 0
+        // }
     }
 }
 
@@ -293,29 +307,24 @@ gameState[1] = function(){
     shape.fillText(`Score: ${score}`, canvas.width-150, 30)
     shape.restore()
 
-    //vertical movement
-    /*
-    if(ship.up){
-        ship.vy = -2;
-    }else{
-        ship.vy = 0.8
-    }
-    //horizontal
-    if(ship.left){
-        ship.vx = -1
-    }else if(ship.right){
-        ship.vx = 1
-    }else{
+    //ship movement
+    
 
-        ship.vx = 0.0
-    }
-    */
     if(ship.up){
-        ship.vy = -1.5
+        ship.vy = -2
     }else if(ship.down){
-        ship.vy = 1.5
+        ship.vy = 2
     }else{
-        ship.vx = -0.2
+        ship.vy = 0
+    }
+    
+
+    if(ship.right){ //forward
+        ship.vx = 2
+    }else{
+        ship.vx = -1.5
+        shape.drawImage(fireIdle, 0-65, -10.5, 60,23)
+        
     }
 
     
@@ -330,15 +339,23 @@ gameState[1] = function(){
 
 
         //Collision Detection happens here
-        if(detectCollision(distance, (ship.height/2 + asteroids[i].radius-10))){
+        if(detectCollision(distance, (ship.height/2 + asteroids[i].radius))){
             console.log("hit asteroid")
             gameOver = true;
             currentState = 2;
             main();
             return;
         }
+        if(ship.x <= 10){
+            console.log("hit boundary")
+            hitBoundary = true;
+            gameOver = true
+            currentState = 2;
+            main();
+            return;
+        }
 
-        if(asteroids[i].x < canvas.width - canvas.width + asteroids[i].radius){
+        if(asteroids[i].x < canvas.width - canvas.width - asteroids[i].radius){
                             //if divided height below it raises asteroids up
             asteroids[i].x = randomRange(canvas.width - asteroids[i].radius, asteroids[i].radius) + canvas.width;
             asteroids[i].y = randomRange(canvas.height - asteroids[i].radius, asteroids[i].radius);
@@ -367,7 +384,7 @@ gameState[1] = function(){
 gameState[2] = function(){
 
     //code for the Game Over  menu AND SCORE 
-    if(score > highScore){
+    if(score > highScore && !hitBoundary){
         highScore = score
 
         shape.save()
@@ -384,6 +401,22 @@ gameState[2] = function(){
         shape.font = "30px arial"
         shape.fillText("Press `Space` to play again", canvas.width/2, canvas.height/2 +100)
         shape.restore()   
+    }else if(hitBoundary){
+        //collides with the left boundary
+        shape.save()
+        shape.font = "30px Orbitron"
+        shape.fillStyle = "white"
+        shape.textAlign = "center"
+        shape.fillText("Game Over! Your score was: " + score.toString(), canvas.width/2, canvas.height/2 -60)
+        shape.fillText("Dont hit the boundary!", canvas.width/2, canvas.height/2-10)
+        shape.fillStyle = "red"
+        shape.fillText("HIGH SCORE DELETED", canvas.width/2, canvas.height/2 +40)
+        shape.font = "20px Orbitron"
+        shape.fillText("Press `Space` to play again", canvas.width/2, canvas.height/2 +100)
+        highScore = 0;
+        shape.restore()
+
+
     }else{
         shape.save()
         shape.font = "30px arial"
@@ -414,6 +447,7 @@ function gameStart(){
     }
     //gives new clean ship to start with
     ship = new playerShip();
+    hitBoundary = false;
 }
 
 function randomRange(high,low){

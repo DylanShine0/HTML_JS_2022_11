@@ -9,10 +9,10 @@ html{
     width: 1180px; /*1625px default*/
 
     
-    padding-top: 15px;
+    padding-top: 2px;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 15px;
+    padding-bottom: 2px;
 
     margin-top: 3px;
     margin-left: 325px;
@@ -36,7 +36,7 @@ body{
     padding-right: 5px;
     padding-bottom: 5px;
 
-    margin: 5px;
+    margin: 1px;
     
     display: flex;
     justify-content: center -10px;
@@ -71,6 +71,7 @@ h1{
    padding: 3px;
    margin: 3px;
    width:fit-content;
+   /*adding a background color to div container takes away from the good looking visuals*/
 }
 
 canvas{
