@@ -388,17 +388,18 @@ gameState[2] = function(){
         highScore = score
 
         shape.save()
-        shape.font = "30px arial"
+        shape.font = "30px orbitron"
         shape.fillStyle = "white"
         shape.textAlign = "center"
         shape.fillText("Game Over! Your Score was: " + score.toString(), canvas.width/2, canvas.height/2 -60)
+        shape.fillStyle = "yellow"
         shape.fillText("Your new High Score is: " + highScore.toString(), canvas.width/2, canvas.height/2 -10)
 
         shape.fillStyle = "red"
         shape.fillText("New Record!", canvas.width/2, canvas.height/2 + 45)
 
         shape.fillStyle = "white"
-        shape.font = "30px arial"
+        shape.font = "30px orbitron"
         shape.fillText("Press `Space` to play again", canvas.width/2, canvas.height/2 +100)
         shape.restore()   
     }else if(hitBoundary){
@@ -419,13 +420,15 @@ gameState[2] = function(){
 
     }else{
         shape.save()
-        shape.font = "30px arial"
+        shape.font = "30px orbitron"
         shape.fillStyle = "white"
         shape.textAlign = "center"
         shape.fillText("Game Over! Your Score was: " + score.toString(), canvas.width/2, canvas.height/2 -60)
+        shape.fillStyle = "yellow"
         shape.fillText("Game Over! Your High Score is: " + highScore.toString(), canvas.width/2, canvas.height/2 -10)
 
-        shape.font = "30px arial"
+        shape.font = "30px orbitron"
+        shape.fillStyle = "white"
         shape.fillText("Press `Space` to play again", canvas.width/2, canvas.height/2 +100)
         shape.restore()   
     }
