@@ -45,7 +45,6 @@ function GameObject(){
 
         //bottom of canvas
         if(this.y > canvas.height - this.radius){
-            
             this.y = canvas.height - this.radius
             this.vy = -this.vy; 
             this.color = `rgb(${randomRange(255,0)}, ${randomRange(255,0)}, ${randomRange(255, 0)})`

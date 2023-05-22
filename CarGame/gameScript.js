@@ -8,7 +8,6 @@ var finish = 956
 var carPos = 2
 
 
-//car fuel
 var startFuel = randomNumber1(canvas.width, 100)
 var fuel = startFuel
 var fuelBarWidth = 512;
@@ -31,8 +30,6 @@ function playerCar() {
 
         shape.save();
 
-        //shape.fillStyle = "red"
-        //shape.fillRect(carPos, canvas.height / 2, 40, 20)
         shape.drawImage(carSprite, carPos, canvas.height / 2, 100, 30)
 
         shape.restore()
@@ -64,13 +61,6 @@ var seconds = setInterval(function(){
 //load game car sprite
 var carSprite = new Image();
 carSprite.src = "images/pixelCAR.png"
-
-
-
-
-
-
-//add some event listeners 
 
 
 function main() {
@@ -144,9 +134,7 @@ function drawStartFinish() {
     finishLineImage.src = "images/FINISH-LINE-RED.png"
     StartLineImage.src = "images/FINISH-LINE-BLUE.png"
 
-    //finish line
     shape.drawImage(finishLineImage, finish, 50, 62, 500)
-    //start line
     shape.drawImage(StartLineImage, start, 50, 62, 500)
 
 }
